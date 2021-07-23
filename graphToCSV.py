@@ -1,11 +1,10 @@
 """
 Darian Comsa
-This is an experiment to see if I can extract data points from 
+This is a trial to see if I can extract data points from 
 ATSPM volume approach graphs.
 Convert the jpeg to rgb arrays and then find the vertex in that column
 """
 
-from matplotlib.transforms import Bbox
 import numpy as np
 from PIL import Image
 from matplotlib import pyplot as plt
