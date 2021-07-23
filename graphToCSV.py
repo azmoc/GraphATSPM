@@ -38,7 +38,7 @@ def GenGraphVals(color_band, row_grid_inds, col_grid_inds, scaling, is_red):
     quarters = []
     for i,c in enumerate(col_grid_inds[:-1]):
         # Divide each grid square into 4 columns to sample
-        quarters += np.linspace(c, col_grid_inds[i+1], 5)[:-1].astype(int).tolist()
+        quarters += np.arange(c, col_grid_inds[i+1], (c-col_grid_inds[i])/4)[:4].astype(int).tolist()
     quarters = np.array(quarters)
     quarters[::4] += 1
     quarters[-1] -= 1
