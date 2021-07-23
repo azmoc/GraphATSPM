@@ -35,15 +35,13 @@ def GenGraphVals(color_band, row_grid_inds, col_grid_inds, scaling, is_red):
     box_bot = row_grid_inds[-1]
     grid_height = box_bot - box_top
     shift_row_inds = row_grid_inds - box_top
-    # Divide each grid square into 4 columns where to sample data
-    # Slow and exact
-    # quarters = np.concatenate([ np.linspace(c, col_grid_inds[i+1], 5)[:-1] for i,c in enumerate(col_grid_inds[:-1]) ]).astype(int)
-    # Fast and good enough
-    quarters = np.concatenate([ np.arange(col_grid_inds[i-1], c, (c - col_grid_inds[i-1])/4)[:4] for i,c in enumerate(col_grid_inds[1:]) ]).astype(int)
-    # Correcting for grid lines
-    # quarters[::4] += 1
-    # Correcting last point
-    # quarters[-1] -= 1
+    quarters = []
+    for i,c in enumerate(col_grid_inds[:-1]):
+        # Divide each grid square into 4 columns to sample
+        quarters += np.arange(c, col_grid_inds[i+1], (col_grid_inds[i+1] - c)/4)[:4].astype(int).tolist()
+    quarters = np.array(quarters)
+    quarters[::4] += 1
+    quarters[-1] -= 1
     for n,i_int in enumerate(quarters):
         # Looking at this column and one pixel right
         pixel_columns = color_band[box_top: box_bot + 3, i_int: i_int + 2].astype(float)[::-1]
@@ -59,11 +57,11 @@ def GenGraphVals(color_band, row_grid_inds, col_grid_inds, scaling, is_red):
         # if np.argmin(k_av) > grid_height-2:
         #     print(k[-40:])
         #     print(k_av[-40:])
-        vals.append(np.argmin(k_av)*scaling)
-    for i in range(1, len(vals)):
-        b = y1 - ( (y2 - y1) / (x2 - x1) ) * x
-        pass
-    return vals
+        yield np.argmin(k_av)*scaling
+        # If not yielding
+        # vals.append(np.argmin(k_av))
+    # If not yielding
+    # return np.array(vals)
 
 
 if __name__ == "__main__":
