@@ -23,5 +23,5 @@ The destination folders must exist prior to running - extracted data and plots g
 Code quirks:
 - Some internal parameters may need adjustment depending on the graph.
 - If no filename argument is given, 31 jpegs are read from "Graphs2020-01/ApproachVolumesGraph2020-01-xx.jpg" with xx filled by 01 to 31.
-- If "show" is in arguments, it saves the volume data to "Volumes/VolumesXxxxxxxxxX.csv" where the Xx...xX is filled by the last 10 digits of the jpeg name (not including .jpg). It is best to make it the date in format YYYY-MM-DD.
+- If "show" is an argument, it saves the volumes data to "Volumes/VolumesXxxxxxxxxX.csv" where the Xx...xX is filled by the last 10 digits of the jpeg filename (not including .jpg). It is best to make them the date in format YYYY-MM-DD.
 - Tested on data of traffic signal 6415.
