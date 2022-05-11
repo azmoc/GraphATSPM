@@ -172,7 +172,6 @@ if __name__ == "__main__":
 
         # Output CSV file for one graph.
         if output:
-            # outputname = f"TEST\\TEST_Volumes{name[-14:-4]}.csv"
             outputname = f"Volumes\\Volumes{name[-14:-4]}.csv"
             with open(outputname, 'w') as csv_f:
                 csv_f.write("Date,Hour,Northbound Volume,Southbound Volume")
@@ -185,11 +184,8 @@ if __name__ == "__main__":
             ax = fig.gca()
             if overlay:
                 graph_region_arr = np.array(graph_region_im)
-                imx,imy,imd = graph_region_arr.shape
-                # print(f'im_array dimensions: {(imx, imy)}')
                 extent = (x_scaled[0], x_scaled[-1], 0., rows_minus_one*200)
                 plt.imshow(graph_region_arr, extent=extent)
-                # plt.imshow(graph_region_arr)
             plt.plot(x_scaled[:-1], tuple(r_scaled_vals), alpha=1)
             plt.plot(x_scaled[:-1], tuple(b_scaled_vals), alpha=1)
             # Add grid lines.
@@ -206,7 +202,7 @@ if __name__ == "__main__":
                                     rowColours= colors,
                                     #   colLabels=x_scaled[:-1:divisions].astype(int),
                                     # bbox=[0,-1.6, 1, 12/8]# for divisions=12
-                                    # bbox=[0,-.66, 1, 4/8]# for divisions=4
+                                    # bbox=[0,-.6, 1, 4/8]# for divisions=4
                                     bbox=[0, -.1-divisions*1.5/12, 1, .125*divisions],
                                     loc='bottom')
                 # plt.subplots_adjust(top=1.47)# for divisions=12
@@ -224,7 +220,6 @@ if __name__ == "__main__":
 
             # Save or show the plot figure.
             if save_graphs:
-                # plt.savefig(f'Plots\\TEST_extracted{name[-14:-4]}.jpg')
                 plt.savefig(f'Plots\\extracted{name[-14:-4]}.jpg')
             else:
                 plt.show()
@@ -234,7 +229,6 @@ if __name__ == "__main__":
         # Use generators for memory efficiency.
         north_v_gen = (item for sublist in north_v for item in sublist)
         south_v_gen = (item for sublist in south_v for item in sublist)
-        # outputname = f"TEST\\TEST_{signalID}Volumes" + file_base[-8:-1] + ".csv"
         outputname = f"Volumes\\{signalID}Volumes" + file_base[-8:-1] + ".csv"
         timestamps = np.round(np.linspace(0, 24 * month_days, 24 * month_days * divisions), 3)
         with open(outputname, 'w') as csv_f:
