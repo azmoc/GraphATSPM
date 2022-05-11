@@ -1,6 +1,6 @@
 # GraphToCSV.py
 
-This program turns a graph of traffic approach volume into data values. The UDOT ATSPM website provides graphs of traffic metrics but does not provide the raw data. In particular, the UDOT ATSPM website provides a jpeg of the graph of approach volume for an intersection. This code reads a jpeg and writes a CSV file in an existing folder called "Values/".
+This program turns a graph of traffic approach volume into data values. The UDOT ATSPM website provides graphs of traffic metrics but does not provide the raw data. In particular, the UDOT ATSPM website provides a jpeg of the graph of approach volume for an intersection. This code reads a jpeg and writes a CSV file in an existing folder called "Volumes/".
 
 Example Command Line (powershell terminal):
 python graphToCSV.py show Graphs2020Jan/VolumesGraph2020-01-01.jpg save overlay
