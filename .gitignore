@@ -2,9 +2,9 @@
 # Graph data files --------------------------------------------------------------
 
 Graphs/
-Graphs2020Jan/
-Plots/
-Volumes/
+Graphs2020-01/
+Plots/*
+Volumes/*
 TEST/
 
 # General Files ---------------------------------------------------------------
