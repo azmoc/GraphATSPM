@@ -10,10 +10,11 @@ Example Command Line (powershell terminal):
 
 Command Line Arguments
 - String arguments of one or more jpegs' relative file paths.
-- Optional string argument "show" to also show comparison graph and table of extracted values.
-- Optional string argument "save" to also save jpeg of comparison graph and table.
-- Optional string argument "overlay" to also overlay the comparison graph on the original.
+- Optional string argument "show" to also show comparison graph of extracted values.
+- Optional string argument "save" to also save jpeg of comparison graph.
+- Optional string argument "table" to also include table of values below comparison graph.
 - Optional string argument "5" to assume 5 minute bins instead of 15 minute bins.
+- Optional string argument "overlay" to also overlay the comparison graph on the original.
 
 Download jpegs of traffic approach volume from the following URL:
 https://udottraffic.utah.gov/atspm/
