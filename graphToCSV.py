@@ -17,6 +17,7 @@ def GetBooleans(args, file_names):
     show_graphs = False
     save_graphs = False
     overlay = False
+    table = False
     divs = 4
     # Get list of file_names and update boolean.
     if len(args) > 0:
@@ -34,13 +35,16 @@ def GetBooleans(args, file_names):
         if 'overlay' in args:
             overlay = True
             args.remove('overlay')
+        if 'table' in args:
+            table = True
+            args.remove('table')
         # To keep reference, use +=.
         file_names += args
     if len(file_names) == 0:
         if not show_graphs:
             output_month = True
         output = False
-    return (output, output_month, show_graphs, save_graphs, divs, overlay)
+    return (output, output_month, show_graphs, save_graphs, divs, overlay, table)
 
 
 def GetBox(color_band):
@@ -121,7 +125,7 @@ if __name__ == "__main__":
     # Parse command line arguments.
     # output: output .csv, output_month: default no filename, show_graphs: display, save_graphs: save figure, 
     # divisions: hourly divisions, overlay: compare graphs
-    output, output_month, show_graphs, save_graphs, divisions, overlay = GetBooleans(sys.argv[1:], file_names)
+    output, output_month, show_graphs, save_graphs, divisions, overlay, table = GetBooleans(sys.argv[1:], file_names)
     # If no filename arguments given, output is false.
     if not output:
         # Default compile month worth of volumes, default January 2020.
@@ -176,8 +180,8 @@ if __name__ == "__main__":
         
         if show_graphs or save_graphs:
             ratio = (col_grid_inds[-1] - col_grid_inds[0]) / (row_grid_inds[-1] - row_grid_inds[0])
-            # 5 inches height is good size.
-            fig = plt.figure(figsize=[ratio*5,1*5])
+            # 5 inches height is good size without the table. [width, height]
+            fig = plt.figure(figsize=[ratio * (4 if table else 5), (1+divisions*1/11 if table else 1) * (4 if table else 5)])
             ax = fig.gca()
             if overlay:
                 graph_region_arr = np.array(graph_region_im)
@@ -192,17 +196,22 @@ if __name__ == "__main__":
             plt.grid()
 
             # Do the table of values.
-            # https://matplotlib.org/stable/gallery/misc/table_demo.html#sphx-glr-gallery-misc-table-demo-py
-            rows = [f':{i:02}' for i in range(0,60,60//divisions)] * 2
-            cell_text = [[f'{int(round(r))}' for r in r_scaled_vals[i::divisions]] for i in range(divisions)] + [[f'{int(round(b))}' for b in b_scaled_vals[i::divisions]] for i in range(divisions)]
-            colors = [[0,0,1,.2]]*divisions + [[1,0,0,.2]]*divisions
-            the_table = plt.table(cellText = cell_text,
-                                  rowLabels=rows,
-                                  rowColours= colors,
-                                #   colLabels=x_scaled[:-1:divisions].astype(int),
-                                  bbox=[0, -2/3, 1, 17/32],
-                                  loc='bottom')
-            plt.subplots_adjust(left=.1, bottom=0.37)
+            if table:
+                # https://matplotlib.org/stable/gallery/misc/table_demo.html#sphx-glr-gallery-misc-table-demo-py
+                rows = [f':{i:02}' for i in range(0,60,60//divisions)] * 2
+                cell_text = [[f'{int(round(r))}' for r in r_scaled_vals[i::divisions]] for i in range(divisions)] + [[f'{int(round(b))}' for b in b_scaled_vals[i::divisions]] for i in range(divisions)]
+                colors = [[0,0,1,.2]]*divisions + [[1,0,0,.2]]*divisions
+                the_table = plt.table(cellText = cell_text,
+                                    rowLabels=rows,
+                                    rowColours= colors,
+                                    #   colLabels=x_scaled[:-1:divisions].astype(int),
+                                    # bbox=[0,-1.6, 1, 12/8]# for divisions=12
+                                    # bbox=[0,-.66, 1, 4/8]# for divisions=4
+                                    bbox=[0, -.1-divisions*1.5/12, 1, .125*divisions],
+                                    loc='bottom')
+                # plt.subplots_adjust(top=1.47)# for divisions=12
+                # plt.subplots_adjust(top=1.23)# for divisions=4
+                plt.subplots_adjust(top=1.11 + divisions*3/100)
 
             # Set x and y ticks.
             ax.set_xticks(x_scaled[::divisions])
