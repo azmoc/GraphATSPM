@@ -1,20 +1,21 @@
 # GraphToCSV.py
 
-This code turns a graph of traffic approach volume into data values. The Utah Department of Transportation (UDOT) Automated Traffic Signal Performance Measures (ATSPM) website provides graphs of traffic metrics but does not provide the raw data. In particular, the UDOT ATSPM website provides a JPEG of the graph of approach volumes for an intersection. This code reads a JPEG and writes a CSV file in an existing folder called "Volumes/".
+This code turns a graph of traffic approach volume into data values. The Utah Department of Transportation (UDOT) Automated Traffic Signal Performance Measures (ATSPM) website provides graphs of traffic metrics but does not provide the raw data. In particular, it provides a JPEG of the graph of daily approach volumes for an intersection. This code reads a JPEG and writes a CSV file in an existing folder called "Volumes/".
 
 ![alt text](./Example/ApproachVolumesGraph2020-01-01.jpg)
 ![alt text](./Example/extracted2020-01-01.jpg)
 
-Example Command Line (powershell terminal):
-- python graphToCSV.py Graphs2020-01/VolumesGraph2020-01-01.jpg show save overlay
+Example to run the program from Command Line (powershell terminal):
+- >python graphToCSV.py Graphs2020-01/VolumesGraph2020-01-01.jpg
+- >python graphToCSV.py Graphs2020-01/VolumesGraph2020-01-01.jpg show save overlay 5 table
 
 Command Line Arguments (order does not matter):
 - String arguments of one or more jpegs' relative file paths.
-- Optional string argument "show" to also show comparison graph of extracted values.
-- Optional string argument "save" to also save JPEG of comparison graph.
-- Optional string argument "table" to also include table of values below comparison graph.
-- Optional string argument "5" to use 5 minute bins instead of 15 minute bins.
-- Optional string argument "overlay" to also overlay the comparison graph on the original.
+- String argument (optional) "show" to also show comparison graph of extracted values.
+- String argument (optional) "save" to also save JPEG of comparison graph.
+- String argument (optional) "table" to also include table of values below comparison graph.
+- String argument (optional) "5" to use 5 minute bins instead of 15 minute bins.
+- String argument (optional) "overlay" to also overlay the comparison graph on the original.
 
 Download jpegs of traffic approach volume from the following URL:
 https://udottraffic.utah.gov/atspm/
